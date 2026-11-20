@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#153b37">
+  <title>Lima Norte Saludable · Reportes ciudadanos</title>
+  <link rel="stylesheet" href="./src/styles.css">
+  <script src="./config.js"></script>
+  <script type="module" src="./src/app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Ir al contenido</a>
+  <header class="site-header"><div class="shell header-inner"><div class="brand"><span class="brand-mark" aria-hidden="true">✳</span><span>Lima Norte <strong>Saludable</strong></span></div><a class="header-link" href="#reportes">Ver reportes <span aria-hidden="true">↗</span></a></div></header>
+  <main id="main">
+    <section class="hero"><div class="shell hero-inner"><div><p class="eyebrow">Participación vecinal · Lima Norte</p><h1>Una calle más limpia empieza con un reporte claro.</h1><p class="lead">Identifica puntos con desechos, orina, deterioro o mascotas sin supervisión. Registra la situación y consulta los reportes por distrito.</p><a class="hero-action" href="#nuevo-reporte">Registrar un punto crítico <span aria-hidden="true">↓</span></a></div><div class="hero-art" aria-hidden="true"><div class="art-circle"><span>Los Olivos</span><span>Comas</span><span>S. M. de Porres</span><span>Independencia</span></div><div class="art-label">4 distritos<br><strong>una comunidad</strong></div></div></div></section>
+    <div class="shell content-grid">
+      <section id="nuevo-reporte" class="panel form-panel" aria-labelledby="form-title"><div class="section-heading"><p class="eyebrow">01 / Participa</p><h2 id="form-title">Nuevo reporte</h2><p>Usa una referencia pública, sin nombres ni direcciones privadas.</p></div><form id="report-form" novalidate><div class="field"><label for="district">Distrito <span aria-hidden="true">*</span></label><select id="district" name="district" required aria-describedby="district-error"><option value="">Selecciona un distrito</option></select><p class="field-error" id="district-error"></p></div><div class="field"><label for="category">Situación <span aria-hidden="true">*</span></label><select id="category" name="category" required aria-describedby="category-error"><option value="">Selecciona el problema</option></select><p class="field-error" id="category-error"></p></div><div class="field"><label for="reference">Referencia del lugar <span aria-hidden="true">*</span></label><input id="reference" name="reference" maxlength="120" placeholder="Ej. parque junto a la avenida principal" required aria-describedby="reference-help reference-error"><p class="field-help" id="reference-help">Describe un espacio público reconocible. Evita domicilios exactos.</p><p class="field-error" id="reference-error"></p></div><div class="field"><label for="description">Descripción <span aria-hidden="true">*</span></label><textarea id="description" name="description" rows="5" maxlength="500" placeholder="Explica qué observaste y cómo afecta al lugar" required aria-describedby="description-error"></textarea><p class="field-error" id="description-error"></p></div><button id="submit-report" class="primary-button" type="submit">Registrar punto crítico</button><p id="feedback" class="notice" role="status" aria-live="polite"></p></form></section>
+      <section id="reportes" class="panel reports-panel" aria-labelledby="reports-title"><div class="section-heading"><p class="eyebrow">02 / Consulta</p><div class="title-row"><h2 id="reports-title">Reportes recientes</h2><span class="count" id="report-count">0</span></div><p>Consulta las incidencias registradas y su estado actual.</p></div><div class="filter-row"><label for="district-filter">Filtrar por distrito</label><select id="district-filter"><option value="">Todos los distritos</option></select></div><div id="report-list" class="report-list" aria-live="polite"></div><p id="data-mode" class="data-mode"></p></section>
+    </div>
+  </main>
+  <footer><div class="shell footer-inner"><span>Lima Norte Saludable · Prototipo académico</span><span>Reporta con responsabilidad</span></div></footer>
+</body>
+</html>
