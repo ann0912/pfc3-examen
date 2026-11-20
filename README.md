@@ -34,6 +34,14 @@ Las pruebas con `prueba1@test.com`, `prueba2@test.com` y `prueba3@test.com` veri
 
 Quedan dos advertencias no críticas de Supabase documentadas en `docs/auditoria-supabase-2026-11-20.md`: la ejecución autenticada de `has_municipal_role`, necesaria y limitada a `auth.uid()`, y la protección de contraseñas filtradas, que requiere plan Pro o superior.
 
+## Jira y limitaciones conocidas
+
+Jira muestra SCRUM-9 a SCRUM-24 en estado `Finalizada`. Ese estado administrativo no elimina estas limitaciones comprobadas:
+
+- **SCRUM-9:** el registro funciona, pero la validación repetida de altas quedó limitada por el rate limit de correos de Supabase.
+- **SCRUM-17:** existe asignación de roles desde el panel para administradores, pero no una interfaz completa de administración de funcionarios; el alta inicial y ciertos ajustes continúan realizándose manualmente en Supabase.
+- Las pruebas E2E autenticadas requieren cuentas de prueba y sesiones separadas. No deben incluirse contraseñas ni estado de sesión en el repositorio o ZIP.
+
 ## Documentación
 
 - `docs/entrega.md`: rúbrica, evidencias y cierre de entrega.
