@@ -6,7 +6,7 @@ const env = Object.fromEntries(readFileSync('.env.local', 'utf8').split(/\r?\n/)
   const i = line.indexOf('=');
   return [line.slice(0, i), line.slice(i + 1).replace(/^['"]|['"]$/g, '')];
 }));
-const url = env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, '');
+const url = env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/rest\/v1\/?$/, '').replace(/\/$/, '');
 const key = env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 if (!url || !key || !/^https:\/\/[a-z0-9-]+\.supabase\.co$/.test(url)) throw new Error('Falta una URL o clave publicable válida.');
 
@@ -23,7 +23,11 @@ const testReport = {
   description: 'Reporte ficticio para verificar persistencia y permisos públicos.'
 };
 const created = await call('', { method: 'POST', headers: { Prefer: 'return=representation' }, body: JSON.stringify(testReport) });
-if (created.status !== 201) throw new Error(`Inserción remota falló: HTTP ${created.status}. Comprueba la migración y RLS.`);
+if (created.status !== 201) {
+  let detail = '';
+  try { const error = JSON.parse(created.body); detail = `${error.code || ''} ${error.message || ''}`.trim(); } catch { /* Respuesta no JSON */ }
+  throw new Error(`Inserción remota falló: HTTP ${created.status}${detail ? ` (${detail})` : ''}. Comprueba la migración y RLS.`);
+}
 const id = JSON.parse(created.body)?.[0]?.id;
 if (!id) throw new Error('Supabase no devolvió el ID del reporte.');
 const selected = await call(`?id=eq.${encodeURIComponent(id)}&select=id,district,category,reference,status`);

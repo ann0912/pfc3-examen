@@ -8,7 +8,7 @@ function localEnv() {
   }));
 }
 const env = { ...localEnv(), ...process.env };
-const url = env.NEXT_PUBLIC_SUPABASE_URL || '';
+const url = (env.NEXT_PUBLIC_SUPABASE_URL || '').replace(/\/rest\/v1\/?$/, '').replace(/\/$/, '');
 const key = env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || '';
 if (url && !/^https:\/\/[a-z0-9-]+\.supabase\.co$/.test(url)) throw new Error('La URL pública de Supabase no es válida.');
 if (Boolean(url) !== Boolean(key)) throw new Error('La URL y la clave publicable deben configurarse juntas.');

@@ -117,7 +117,7 @@ Los cuatro sprints de Jira están en estado futuro y sus objetivos indican H0–
 | Rúbrica | PDF adjunto, páginas 1–3; transcripción anterior | Verificado |
 | Backlog SCRUM | Consulta JQL de SCRUM-5 a SCRUM-24 | Leído; acceso del docente y capturas pendientes |
 | Aplicación | 5 pruebas Node y build local | Parcial: falta prueba visual y criterios completos |
-| Persistencia y permisos | Migración y `npm run verify:remote` preparados | `.env.local` existe vacío; la prueba se detuvo antes de enviar datos. Migración y RLS no verificadas |
+| Persistencia y permisos | `npm run verify:remote` contra el proyecto con configuración pública local | HTTP 404 `PGRST205`: falta `public.critical_reports`; no hubo inserción ni verificación de RLS. Aplicar migración SQL y repetir |
 | GitHub Actions y PR | [Run 44665813492](https://github.com/ann0912/pfc3-examen/actions/runs/44665813492), commit `02e3b57` | Build, test y security correctos; deploy omitido en rama de trabajo; PR pendiente |
 | Vercel | Configuración local | Sin URL pública verificada |
 | ZIP | Código local | Pendiente de generar e inspeccionar |
