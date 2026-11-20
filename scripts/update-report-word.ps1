@@ -66,8 +66,8 @@ Add-Text '1 Resultado de entrega' 'Heading 1'
 Add-Table @('Elemento','Resultado') @(
   @('Repositorio','github.com/ann0912/pfc3-examen'),
   @('PR PC2','#5 fusionado'),
-  @('Commit de main','804424e97ff79321d7a133cb983649afcc82d39f'),
-  @('GitHub Actions','Run 44695736671 aprobado'),
+  @('Commit auditado','8a6359851b5eefc4ab6f5aee9ac994fb3eac6107'),
+  @('GitHub Actions','Run 44704978497 aprobado'),
   @('Producción','https://pfc3-examen.vercel.app/ — HTTP 200'),
   @('Supabase','pqgfhgpeilncwyoyymgq')
 )
@@ -112,7 +112,7 @@ Add-Table @('Verificación','Resultado') @(
   @('npm audit','Cero vulnerabilidades'),
   @('Security','Patrones prohibidos y Gitleaks aprobados'),
   @('CodeQL','Análisis JavaScript aprobado'),
-  @('Deploy','Aprobado sobre main 804424e')
+  @('Deploy','Aprobado sobre main 8a63598')
 )
 Add-Text 'El dominio de producción respondió HTTP 200. En producción se observó una sesión real de prueba1@test.com con la mascota Robyn, el reporte LN-00000002, estado Atendido y notificaciones persistentes.'
 
@@ -128,7 +128,7 @@ Add-Bullets @(
 )
 
 Add-Text '8 Enlaces de evidencia' 'Heading 1'
-Add-Text "Repositorio: https://github.com/ann0912/pfc3-examen`nPR: https://github.com/ann0912/pfc3-examen/pull/5`nActions: https://github.com/ann0912/pfc3-examen/actions/runs/44695736671`nProducción: https://pfc3-examen.vercel.app/`nJira: https://anelis-pfc3.atlassian.net/jira/software/projects/SCRUM"
+Add-Text "Repositorio: https://github.com/ann0912/pfc3-examen`nPR funcional: https://github.com/ann0912/pfc3-examen/pull/5`nPR de cierre documental: https://github.com/ann0912/pfc3-examen/pull/8`nActions: https://github.com/ann0912/pfc3-examen/actions/runs/44704978497`nProducción: https://pfc3-examen.vercel.app/`nJira: https://anelis-pfc3.atlassian.net/jira/software/projects/SCRUM"
 
 $doc.SaveAs2($docxPath, 16)
 $doc.ExportAsFixedFormat($pdfPath, 17)
