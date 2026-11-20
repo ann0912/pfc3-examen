@@ -1,3 +1,5 @@
+> **Estado verificado de entrega:** [web pública](https://pfc3-examen.vercel.app/) probada en escritorio y móvil; [PR #1](https://github.com/ann0912/pfc3-examen/pull/1) y [PR #2](https://github.com/ann0912/pfc3-examen/pull/2) fusionados; [Actions 44675027116](https://github.com/ann0912/pfc3-examen/actions/runs/44675027116) con build/test/security aprobados y deploy automático fallido; despliegue manual [Ready](https://vercel.com/usil2/pfc3-examen/BopyiFAHN1Sao49pPWwK4CFKBoxP). Scrum: 74 SP planificados, 0 aceptados. El PDF se transcribe literalmente más abajo; la ejecución y los bloqueos actuales constan en [informe.md](informe.md). Las notas de estado anteriores en este archivo son históricas.
+
 # Entrega: Mascotas y salubridad en Lima Norte
 
 Fuente: `(10-26-2) PrácticaCalificada2-PFCIII-H.pdf`, páginas 1–3. El PDF imprime **120 minutos**; el estudiante corrigió la duración total del examen a **4 horas, hasta las 12:00 a. m.**. La planificación operativa usa H0–H4 y cuatro sprints de 60 minutos. Los 74 SP son esfuerzo relativo del backlog, no horas ni funcionalidades terminadas.

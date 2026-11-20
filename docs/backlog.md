@@ -1,3 +1,5 @@
+> **Corte real de entrega, 19/11/2026:** [producción verificada](https://pfc3-examen.vercel.app/) con registro, lectura tras recarga y filtro por distrito. SCRUM-13 permanece En curso (8 SP pendientes) porque faltan autenticación, código visible y estado inicial «Recibido». SCRUM-18 ofrece solo filtro público; no hay panel municipal. Cero historias aceptadas, cero SP quemados y 74 SP pendientes. Las notas de prueba pendiente y simulación en el texto histórico inferior anteceden a este corte.
+
 # Backlog canónico — proyecto SCRUM
 
 Proyecto Jira comprobado en modo lectura: [SCRUM](https://anelis-pfc3.atlassian.net/jira/software/projects/SCRUM). Épicas SCRUM-5 a SCRUM-8 e historias SCRUM-9 a SCRUM-24, con padres, puntos y sprint, observadas mediante consulta JQL. No se modificó Jira. Los códigos HU del Excel se conservan solo como referencia de origen: HU-01 corresponde a SCRUM-9, y así sucesivamente hasta HU-16 = SCRUM-24.

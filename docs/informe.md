@@ -1,3 +1,21 @@
+# Corte de ejecución real — 19 de noviembre de 2026
+
+La entrega pública verificada es [Lima Norte Saludable](https://pfc3-examen.vercel.app/). El despliegue [Vercel BopyiFAHN1Sao49pPWwK4CFKBoxP](https://vercel.com/usil2/pfc3-examen/BopyiFAHN1Sao49pPWwK4CFKBoxP) quedó **Ready**. Se usó la sesión local autenticada y el build de producción del mismo árbol de código de `main`; no se usó un deploy automático exitoso.
+
+**Prueba real de navegador:** Chrome escritorio 1280 × 800 y móvil 390 × 844. La página respondió HTTP 200; el formulario validó campos vacíos, registró un reporte ficticio en modo Supabase, lo mostró en la lista, volvió a mostrarlo tras recargar y lo encontró con el filtro Los Olivos. En móvil no hubo desbordamiento horizontal. [Captura escritorio](evidencias/produccion-escritorio.png) y [captura móvil](evidencias/produccion-movil.png). El identificador de prueba visible fue «Parque público prueba PC2 e0e16277»; se trata de datos ficticios. La prueba directa adicional verificó POST/GET y rechazo PATCH/DELETE anónimos HTTP 401.
+
+**GitHub y controles:** [PR #1](https://github.com/ann0912/pfc3-examen/pull/1) y [PR #2](https://github.com/ann0912/pfc3-examen/pull/2) están fusionados. En [Actions 44675027116](https://github.com/ann0912/pfc3-examen/actions/runs/44675027116), build, test y security aprobaron; el job de deploy **falló** con `User not found (404)` en Vercel CLI pese a preflight HTTP 200. La publicación manual se realizó después de los controles verdes, pero **el CD automático permanece pendiente**. `vercel.json` desactiva el deploy automático por integración Git.
+
+**Scrum real al corte:** cuatro bloques planificados de 60 minutos H0–H4; 74 SP estimados, 0 SP aceptados y 74 SP pendientes. SCRUM-13 está En curso: funcionan formulario, validación, inserción, consulta y filtro, pero faltan autenticación, código único visible y estado inicial «Recibido». SCRUM-18 tiene solo filtro público, sin panel municipal. Las otras 14 historias siguen pendientes. No se declara velocidad positiva. El [burndown actualizado](burndown-horas.svg) muestra los puntos pendientes reales, sin quemado inventado. El [Gantt](gantt-horas.svg) conserva ventanas **planificadas** y no acredita inicio o cierre de historias. Flujo previsto: To Do → In Progress → In Review → Done; WIP 3 y 2 en columnas intermedias. Los estados exactos del tablero deben consultarse en [Jira SCRUM](https://anelis-pfc3.atlassian.net/jira/software/projects/SCRUM); se añadió nueva evidencia técnica al [SCRUM-13](https://anelis-pfc3.atlassian.net/browse/SCRUM-13), sin moverlo a Done. No se ha comprobado el permiso de acceso del docente.
+
+**Arquitectura efectiva:** navegador → frontend estático Vercel → Supabase REST API → PostgreSQL `public.critical_reports` con RLS. No hay backend propio, Supabase Auth, roles municipales, mapa ni registro de mascotas. El modo local es solo respaldo cuando no hay configuración; en producción se comprobó visualmente «Datos compartidos en Supabase» y persistencia tras recarga. La seguridad verificada incluye validación y escape de HTML, RLS de lectura/inserción anónima y rechazo de modificación/borrado anónimos. Moderación, límites de tasa, identidades y autorizaciones por rol quedan pendientes.
+
+---
+
+## Plan y cortes anteriores conservados como antecedente
+
+Las secciones siguientes registran la planificación y observaciones previas al despliegue. Sus expresiones de «pendiente de URL», «PR en borrador» y burndown simulado **han sido sustituidas por el corte real anterior**; se conservan para mostrar la evolución documental y no describen el estado final.
+
 # Informe — Mascotas y salubridad en Lima Norte
 
 **Examen:** cuatro horas, H0–H4, con cuatro sprints de **60 minutos**. El [backlog canónico](backlog.md) registra 74 SP planificados; los SP no son horas ni historias implementadas. La [rúbrica literal](entrega.md) se conserva aparte. Se consultó [SCRUM](https://anelis-pfc3.atlassian.net/jira/software/projects/SCRUM) en modo lectura: claves SCRUM-5 a SCRUM-24, padres, puntos y sprints. No se modificó Jira. No se ha comprobado acceso del docente.
