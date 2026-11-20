@@ -6,9 +6,10 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "test": "node --test",
-    "lint": "node --check src/app.js && node --check src/report.js && node --check src/api.js && node --check scripts/build.mjs",
+    "lint": "node --check src/app.js && node --check src/report.js && node --check src/api.js && node --check scripts/build.mjs && node --check scripts/verify-remote.mjs",
     "typecheck": "node scripts/typecheck.mjs",
-    "security": "node scripts/security.mjs"
+    "security": "node scripts/security.mjs",
+    "verify:remote": "node scripts/verify-remote.mjs"
   },
   "engines": { "node": ">=20" }
 }

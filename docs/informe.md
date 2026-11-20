@@ -61,7 +61,7 @@ flowchart LR
   G[GitHub Actions workflow local] -. Publicación pendiente .-> C[Vercel]
 ```
 
-La ruta efectiva de la demo es navegador → validación → `localStorage`; no hay backend propio ni autenticación. El código incluye una ruta REST de Supabase condicionada a URL y clave publicable, y una migración de `critical_reports` con PK UUID, restricciones, índice y RLS de lectura/inserción anónima. Su aplicación y permisos **no se han verificado**. No existe aún modelo propietario–mascota ni FK; PostgreSQL se justifica para relaciones y consultas futuras, pero la demo actual solo tiene una entidad de reporte. No se solicitan nombres de personas ni coordenadas precisas. La aplicación carece de moderación y límites de tasa para inserción pública.
+La ruta efectiva de la demo es navegador → validación → `localStorage`; no hay backend propio ni autenticación. El código incluye una ruta REST de Supabase condicionada a URL y clave publicable, y una migración de `critical_reports` con PK UUID, restricciones, índice y RLS de lectura/inserción anónima. Su aplicación y permisos **no se han verificado**. `npm run verify:remote` está preparado para insertar un reporte ficticio, volver a leerlo y comprobar que UPDATE y DELETE anónimos se deniegan; el primer intento se detuvo antes de enviar datos porque `.env.local` estaba vacío. No existe aún modelo propietario–mascota ni FK; PostgreSQL se justifica para relaciones y consultas futuras, pero la demo actual solo tiene una entidad de reporte. No se solicitan nombres de personas ni coordenadas precisas. La aplicación carece de moderación y límites de tasa para inserción pública.
 
 La arquitectura DOCX adjunta propone Next.js, React, TypeScript, API Routes, Supabase Auth/Storage, Leaflet y OpenStreetMap. Esos componentes **no están en el código actual**. Cuenta, roles municipales, fotos y mapa son trabajo futuro. El diagrama físico previsto sería navegador → Vercel CDN y navegador → Supabase API → PostgreSQL, una vez configurados y verificados.
 
@@ -69,18 +69,18 @@ La arquitectura DOCX adjunta propone Next.js, React, TypeScript, API Routes, Sup
 |---|---|---|---|
 | Plan | Backlog y Jira SCRUM | Criterios y dependencias | 20 incidencias comprobadas en lectura; sin cambios en Jira |
 | Code | Git, rama local de trabajo | Revisión antes de main | Rama `test/mascotas-salubridad`; cambios sin commit ni PR |
-| Build | Node, `npm ci`, build estático | Lockfile y sintaxis | Ejecutado localmente con resultado correcto |
-| Test | `node --test` | Validación, escape de texto y persistencia local | 5 pruebas locales correctas; no cubren criterios completos de SCRUM-13 |
+| Build | Node, `npm ci`, build estático | Lockfile y sintaxis | Correcto localmente y en [Actions 44665813492](https://github.com/ann0912/pfc3-examen/actions/runs/44665813492) |
+| Test | `node --test` | Validación, escape de texto y persistencia local | 5 pruebas locales y job remoto correctos; no cubren criterios completos de SCRUM-13 |
 | Release | PR de GitHub | Revisión y checks | Propuesta; sin PR ni branch protection verificados |
-| Deploy | Workflow y Vercel | Job dependiente de seguridad | YAML preparado; sin ejecución ni deploy comprobados |
+| Deploy | Workflow y Vercel | Job dependiente de seguridad | Omitido correctamente en el push de la rama de trabajo; no hay deploy comprobado |
 | Operate | Supabase previsto | RLS y permisos mínimos | SQL escrito; sin aplicación ni prueba de identidades |
 | Monitor | Logs de Actions/Vercel/Supabase | Diagnóstico de fallos | Propuesta futura |
 
-**Seguridad implementada en el repositorio:** validación de distrito, categoría y longitud; escape de texto antes de insertarlo en HTML; migración con RLS escrita; workflow con pasos de patrones, audit, Gitleaks y CodeQL. **Verificado localmente:** 5/5 pruebas, lint, build, audit sin dependencias vulnerables reportadas y revisión estática simple. **Pendiente:** ejecutar CI remoto, comprobar RLS real, bloquear merge con checks y asegurar que Vercel no publique producción por otra vía.
+**Seguridad implementada en el repositorio:** validación de distrito, categoría y longitud; escape de texto antes de insertarlo en HTML; migración con RLS escrita; workflow con pasos de patrones, audit, Gitleaks y CodeQL. **Verificado:** 5/5 pruebas locales, lint, build y audit locales; en [Actions 44665813492](https://github.com/ann0912/pfc3-examen/actions/runs/44665813492) pasaron build, test y security, incluidos Gitleaks y CodeQL. **Pendiente:** comprobar RLS real, bloquear merge con checks y asegurar que Vercel no publique producción por otra vía.
 
 ## 4. GitHub, pipeline y web
 
-Repositorio indicado: [ann0912/pfc3-examen](https://github.com/ann0912/pfc3-examen). La rama local de trabajo existe y `main` sigue como base; no se hizo commit ni PR de estos cambios. El workflow conserva `git diff --check` y ordena los jobs **build → test → security → deploy**. El job de deploy depende de seguridad y solo corre en un push a main. Esto está definido en YAML, **no probado en GitHub Actions**. El build actual produce una demo local sin configuración Supabase. No hay URL pública Vercel ni prueba de persistencia remota; tampoco se ha comprobado la configuración de producción de Vercel.
+Repositorio: [ann0912/pfc3-examen](https://github.com/ann0912/pfc3-examen). El commit [`02e3b57`](https://github.com/ann0912/pfc3-examen/commit/02e3b57) está publicado en `test/mascotas-salubridad`; no hay PR verificado. El workflow conserva `git diff --check` y ordena los jobs **build → test → security → deploy**. La [ejecución 44665813492](https://github.com/ann0912/pfc3-examen/actions/runs/44665813492) pasó build, test y security; deploy se omitió porque fue un push a la rama de trabajo. El build produce una demo local sin configuración Supabase. No hay URL pública Vercel ni prueba de persistencia remota; tampoco se ha comprobado la configuración de producción de Vercel.
 
 | Recorrido | Estado comprobable |
 |---|---|
@@ -90,9 +90,10 @@ Repositorio indicado: [ann0912/pfc3-examen](https://github.com/ann0912/pfc3-exam
 | Cuenta y registro de mascotas | No implementados |
 | Mapa geográfico e indicadores | No implementados |
 | Fiscalización y cierre municipal | No implementados |
-| Supabase, GitHub Actions y Vercel | Integraciones preparadas parcialmente; sin verificación real |
+| Supabase y Vercel | Integraciones preparadas parcialmente; sin verificación real |
+| GitHub Actions | Build, test y security correctos en run 44665813492; deploy omitido |
 
-Para la entrega faltan capturas reales del proyecto SCRUM y de Actions, comprobar acceso del docente, PR, despliegue y ZIP. No se adjudica evidencia de ejecución a la simulación académica.
+Para la entrega faltan capturas reales del proyecto SCRUM y de Actions, comprobar acceso del docente, PR, despliegue y ZIP. El enlace a Actions sí demuestra los jobs remotos; no se adjudica evidencia de ejecución a la simulación académica.
 
 ## Guion breve y preguntas de práctica
 
