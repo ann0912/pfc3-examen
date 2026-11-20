@@ -56,3 +56,28 @@ test('valida cuenta, mascota y coordenadas antes de enviar', () => {
   assert.equal(validateReport({ district: 'Comas', category: 'Heces acumuladas', reference: 'Parque central', description: 'Descripción ficticia suficiente.', latitude: '-12.05', longitude: '-77.05' }).valid, true);
   assert.equal(validateReport({ district: 'Comas', category: 'Heces acumuladas', reference: 'Parque central', description: 'Descripción ficticia suficiente.', latitude: '-9', longitude: '-77.05' }).valid, false);
 });
+
+test('rechaza fotografías por tipo, tamaño y firma antes de subirlas', async () => {
+  let uploads = 0;
+  const client = createClient(config, async (url) => {
+    if (url.includes('grant_type=password')) return response({
+      access_token: 'photo-access', refresh_token: 'photo-refresh', expires_in: 3600,
+      user: { id: 'u-photo', email: 'foto@example.com' }
+    });
+    uploads++;
+    return response({});
+  }, memory());
+  await client.signIn('foto@example.com', 'no-real');
+
+  const bytes = (...values) => ({ arrayBuffer: async () => Uint8Array.from(values).buffer });
+  await assert.rejects(client.uploadPhoto('r1', {
+    size: 100, type: 'image/gif', slice: () => bytes(0x47, 0x49, 0x46)
+  }), /JPEG, PNG o WebP/);
+  await assert.rejects(client.uploadPhoto('r1', {
+    size: 5242881, type: 'image/png', slice: () => bytes(0x89, 0x50, 0x4e, 0x47)
+  }), /máximo 5 MB/);
+  await assert.rejects(client.uploadPhoto('r1', {
+    size: 100, type: 'image/png', slice: () => bytes(0x00, 0x00, 0x00, 0x00)
+  }), /contenido no coincide/);
+  assert.equal(uploads, 0);
+});
