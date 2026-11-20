@@ -1,42 +1,25 @@
-# Base vacía para PFC III
+# Mascotas y salubridad en Lima Norte
 
-Abre esta carpeta en Codex. Lee AGENTS.md antes de comenzar. Las herramientas
-quedan preparadas como estructura y configuración inicial. El caso se incorpora
-cuando se entregue el enunciado.
+Prototipo académico local. La interfaz actual permite registrar reportes ciudadanos anónimos y consultarlos por distrito en el mismo navegador. Usa `localStorage` si no hay configuración Supabase. No incluye cuentas, registro de mascotas, mapa, fotos ni gestión municipal.
 
-## Preparación previa
+La fuente de verdad documental es [docs/backlog.md](docs/backlog.md): épicas reales `SCRUM-5` a `SCRUM-8` e historias `SCRUM-9` a `SCRUM-24`, con puntos y dependencias. Se comprobaron en Jira mediante lectura, sin modificarlo. [docs/entrega.md](docs/entrega.md) conserva la rúbrica literal; [docs/informe.md](docs/informe.md) distingue implementación local y la **SIMULACIÓN ACADÉMICA** de cuatro sprints de 60 minutos, H0–H4.
 
-1. GitHub. Crea un repositorio privado vacío llamado pfc3-examen, salvo que el
-   profesor indique otro nombre o visibilidad. Desde esta carpeta en PowerShell:
+## Comprobación local
 
-   ```powershell
-   git init -b main
-   git add .
-   git diff --cached --check
-   git commit -m "chore: preparar base vacía para PFC III"
-   git remote add origin https://github.com/TU-USUARIO/pfc3-examen.git
-   git push -u origin main
-   ```
+```powershell
+npm.cmd ci --offline
+npm.cmd run lint
+npm.cmd test
+npm.cmd run security
+npm.cmd run build
+```
 
-   Abre Actions y comprueba el check inicial. Si Git pide identidad, configura
-   user.name y user.email para este repositorio. El check inicial comprueba el
-   formato del diff. Los controles de aplicación se añaden al definir el stack.
+El build queda en `dist/`. Si se configura `.env.local` con `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, el build genera una configuración pública para el cliente. La migración SQL está en `supabase/migrations`; no se ha aplicado ni verificado en un proyecto remoto. No escribas claves secretas en el repositorio.
 
-2. Jira. Crea un proyecto Scrum vacío en tu sitio, con nombre PFC III Examen y
-   clave PFC3 si está libre. Comprueba que puedes abrir el tablero y el backlog.
-3. Supabase. Crea un proyecto vacío y conserva el enlace del panel. El archivo
-   .env.example sirve de referencia si el caso usa Next.js. Guarda credenciales
-   locales en .env.local. Las variables públicas del cliente nunca contienen
-   credenciales secretas.
-4. Vercel. Comprueba acceso a tu cuenta y que puedes seleccionar el repositorio
-   al preparar la importación. Completa la importación al tener una aplicación
-   compilable. Una carpeta de documentación sola todavía no es una demo.
+## Estado de integraciones
 
-## Día del examen
+La rama local de trabajo y el workflow están preparados. El backlog SCRUM se consultó en modo lectura; faltan capturas y comprobación del acceso del docente. Supabase, GitHub Actions y Vercel requieren verificación real antes de afirmar que están conectados o desplegados.
 
-Entrega a Codex el enunciado, la rúbrica y el material de clase, y dile:
-«Lee AGENTS.md y analiza este enunciado. Completa docs/entrega.md con los
-requisitos. Implementa y verifica primero el flujo mínimo que pueda demostrar».
+## Contexto de la base
 
-Antes de entregar, abre los enlaces y archivos que pide el enunciado. Comprueba
-que el profesor tiene el acceso necesario y que adjuntas el formato solicitado.
+Este repositorio comenzó como una estructura vacía con un workflow de revisión de diff. Los archivos de aplicación y documentación actuales son trabajo local sin commit ni despliegue verificados.

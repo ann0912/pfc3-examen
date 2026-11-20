@@ -2,6 +2,7 @@
 !.env.example
 node_modules/
 .next/
+dist/
 .vercel/
 coverage/
 playwright-report/
