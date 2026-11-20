@@ -28,4 +28,4 @@ Proyecto inspeccionado: `pqgfhgpeilncwyoyymgq`. Consultas de solo lectura en SQL
 1. Security Advisor mantiene dos advertencias no críticas: ejecución de `has_municipal_role` por `authenticated`, necesaria para las políticas y limitada a `auth.uid()`, y protección de contraseñas filtradas desactivada.
 2. Habilitar la protección de contraseñas filtradas requiere cambiar del plan Free a Pro o superior y activarla en Authentication > Settings; no se hizo ningún cambio de plan.
 3. No quedan pruebas críticas de Storage pendientes. El intento DELETE con la sesión real de B fue rechazado y el objeto permaneció intacto.
-4. No hacer merge ni despliegue hasta que CI y CodeQL del commit de evidencia finalicen correctamente.
+4. El PR #5 fue fusionado en `main` mediante `804424e97ff79321d7a133cb983649afcc82d39f`. El run 44695736671 aprobó build, test, security, CodeQL y deploy; Vercel publicó la versión PC2.

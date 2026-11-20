@@ -1,25 +1,45 @@
-# Mascotas y salubridad en Lima Norte
+# Lima Norte Saludable
 
-Prototipo académico local. La interfaz actual permite registrar reportes ciudadanos anónimos y consultarlos por distrito en el mismo navegador. Usa `localStorage` si no hay configuración Supabase. No incluye cuentas, registro de mascotas, mapa, fotos ni gestión municipal.
+Aplicación web PC2 para registro ciudadano de mascotas e incidencias de salubridad, seguimiento municipal y visualización pública de ubicaciones aproximadas en Lima Norte.
 
-La fuente de verdad documental es [docs/backlog.md](docs/backlog.md): épicas reales `SCRUM-5` a `SCRUM-8` e historias `SCRUM-9` a `SCRUM-24`, con puntos y dependencias. Se comprobaron en Jira mediante lectura, sin modificarlo. [docs/entrega.md](docs/entrega.md) conserva la rúbrica literal; [docs/informe.md](docs/informe.md) distingue implementación local y la **SIMULACIÓN ACADÉMICA** de cuatro sprints de 60 minutos, H0–H4.
+## Producción
 
-## Comprobación local
+- Web: https://pfc3-examen.vercel.app/
+- Repositorio: https://github.com/ann0912/pfc3-examen
+- PR del incremento PC2: https://github.com/ann0912/pfc3-examen/pull/5
+- Merge de PC2 en `main`: `804424e97ff79321d7a133cb983649afcc82d39f`
+- CI/CD: https://github.com/ann0912/pfc3-examen/actions/runs/44695736671
+
+El run de `main` aprobó build, 12 pruebas, análisis de seguridad, Gitleaks, `npm audit`, CodeQL y despliegue de Vercel. La aplicación usa Supabase Auth, PostgreSQL con RLS y Storage privado. El frontend solo recibe la URL y la clave publicable; no usa `service_role` ni credenciales administrativas.
+
+## Verificación local
 
 ```powershell
-npm.cmd ci --offline
+npm.cmd ci
 npm.cmd run lint
+npm.cmd run typecheck
 npm.cmd test
 npm.cmd run security
 npm.cmd run build
+npm.cmd audit --audit-level=low
 ```
 
-El build queda en `dist/`. Si se configura `.env.local` con `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, el build genera una configuración pública para el cliente. La migración SQL de `supabase/migrations` fue aplicada por el propietario del proyecto. `npm.cmd run verify:remote` comprobó inserción, lectura y rechazo anónimo de PATCH/DELETE con datos ficticios. No escribas claves secretas en el repositorio.
+El build queda en `dist/`. Para conectar Supabase se requiere un `.env.local` no versionado con `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
 
-## Estado de integraciones
+## Base de datos y seguridad
 
-La rama de trabajo tiene una ejecución de GitHub Actions con build, test y security correctos para un commit anterior. El backlog SCRUM se consultó en modo lectura; faltan capturas y comprobación del acceso del docente. Falta verificar el recorrido en navegador contra Supabase y el despliegue público de Vercel.
+Las migraciones versionadas están en `supabase/migrations`. Las migraciones `202611200004_function_privileges.sql` y `202611200005_public_map_security_invoker.sql` aplican mínimo privilegio a funciones y reemplazan la vista pública con una vista `security_invoker` sobre una caché mínima protegida por RLS.
 
-## Contexto de la base
+Las pruebas con `prueba1@test.com`, `prueba2@test.com` y `prueba3@test.com` verificaron aislamiento bilateral de mascotas y reportes, operaciones propias, fiscalización asignada, persistencia y bloqueo de modificación ajena. Storage rechazó mediante su API el borrado de una foto privada de A por B y el objeto permaneció intacto.
 
-Este repositorio comenzó como una estructura vacía con un workflow de revisión de diff. La aplicación y los documentos tienen un primer commit publicado en la rama de trabajo; los cambios posteriores requieren revisión y publicación.
+Quedan dos advertencias no críticas de Supabase documentadas en `docs/auditoria-supabase-2026-11-20.md`: la ejecución autenticada de `has_municipal_role`, necesaria y limitada a `auth.uid()`, y la protección de contraseñas filtradas, que requiere plan Pro o superior.
+
+## Documentación
+
+- `docs/entrega.md`: rúbrica, evidencias y cierre de entrega.
+- `docs/informe.md`: informe técnico completo.
+- `docs/informe-PC2.docx`: informe Word entregable.
+- `docs/auditoria-supabase-2026-11-20.md`: auditoría de RLS, funciones, vista y Storage.
+- `docs/backlog.md`: épicas e historias SCRUM-5 a SCRUM-24.
+
+No incluyas `.env.local`, tokens, contraseñas, `node_modules`, `dist` ni temporales en el ZIP de entrega.
