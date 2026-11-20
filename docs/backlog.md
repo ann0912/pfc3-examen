@@ -11,7 +11,7 @@ Los 74 story points coinciden entre el backlog Excel y los campos consultados en
 | SCRUM-7 | Gestión municipal y fiscalización | Consultar, clasificar, asignar y atender incidencias con registro de inspección; mejorar respuesta municipal. |
 | SCRUM-8 | Mapa y monitoreo de puntos críticos | Visualizar incidencias y estadísticas por zona; apoyar decisiones municipales. |
 
-**Estado real:** ninguna historia de este backlog está demostrada de extremo a extremo. La web local cubre partes de SCRUM-13 y SCRUM-18: formulario anónimo de reportes, cuatro categorías, lista pública y filtro por distrito. No implementa las cuentas, ubicación en mapa, fotos, historial privado, roles, fiscalización, estadísticas ni notificaciones que exigen los criterios completos. Los estados de los cuatro sprints del informe son **SIMULACIÓN ACADÉMICA** y no equivalen a historias terminadas en el código o en Jira.
+**Estado real:** ninguna historia de este backlog está demostrada de extremo a extremo. La web cubre partes de SCRUM-13 y SCRUM-18: formulario anónimo de reportes, cuatro categorías, lista pública y filtro por distrito. La prueba directa de Supabase confirmó inserción, lectura y rechazo de actualización y borrado anónimos; falta probar el recorrido desde una URL pública. No implementa las cuentas, ubicación en mapa, fotos, historial privado, roles, fiscalización, estadísticas ni notificaciones que exigen los criterios completos. Los estados de los cuatro sprints del informe son **SIMULACIÓN ACADÉMICA** y no equivalen a historias terminadas en el código o en Jira.
 
 | ID | Épica | Historia / nombre canónico | SP | MoSCoW | Depende de | Sprint | Estado real |
 |---|---|---|---:|---|---|---|---|
@@ -19,7 +19,7 @@ Los 74 story points coinciden entre el backlog Excel y los campos consultados en
 | SCRUM-10 | SCRUM-5 | Inicio de sesión | 3 | Must | SCRUM-9 | S1 | Pendiente |
 | SCRUM-11 | SCRUM-5 | Registro de mascotas | 5 | Must | SCRUM-9, SCRUM-10 | S1 | Pendiente |
 | SCRUM-12 | SCRUM-5 | Actualizar datos de mascotas | 3 | Should | SCRUM-11 | S1 | Pendiente |
-| SCRUM-13 | SCRUM-6 | Registrar reporte de contaminación | 8 | Must | SCRUM-10 | S2 | Parcial local: falta sesión, código y estado «Recibido» |
+| SCRUM-13 | SCRUM-6 | Registrar reporte de contaminación | 8 | Must | SCRUM-10 | S2 | Parcial: POST/GET remotos probados; falta sesión, código y estado «Recibido», más prueba web pública |
 | SCRUM-14 | SCRUM-6 | Ubicación geográfica del reporte | 5 | Must | SCRUM-13 | S2 | Pendiente: no hay mapa ni coordenadas |
 | SCRUM-15 | SCRUM-6 | Adjuntar evidencia fotográfica | 3 | Should | SCRUM-13 | S2 | Pendiente |
 | SCRUM-16 | SCRUM-6 | Consultar historial de reportes | 3 | Should | SCRUM-13 | S2 | Pendiente: lista pública no equivale a historial propio |

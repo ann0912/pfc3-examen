@@ -101,7 +101,7 @@ Prioridad: registrar una incidencia ficticia, comprobar que se guarda y se consu
 |---|---|---|
 | H0–H1 | Revisar requisitos, preparar recorrido y datos ficticios | SCRUM-13; SCRUM-9 a SCRUM-12 permanecen planificadas |
 | H1–H2 | Registrar incidencia y consultarla | SCRUM-13 y SCRUM-18, cobertura parcial local |
-| H2–H3 | Persistencia, permisos y pruebas | SQL y RLS propuestos; verificación remota pendiente |
+| H2–H3 | Persistencia, permisos y pruebas | SQL aplicado y prueba remota de acceso anónimo correcta; recorrido web público pendiente |
 | H3–H4 | Pipeline, despliegue, evidencias y ZIP | No afirmar completado hasta tener ejecución y enlaces |
 
 ## Fuente única de verdad SCRUM
@@ -117,7 +117,7 @@ Los cuatro sprints de Jira están en estado futuro y sus objetivos indican H0–
 | Rúbrica | PDF adjunto, páginas 1–3; transcripción anterior | Verificado |
 | Backlog SCRUM | Consulta JQL de SCRUM-5 a SCRUM-24 | Leído; acceso del docente y capturas pendientes |
 | Aplicación | 5 pruebas Node y build local | Parcial: falta prueba visual y criterios completos |
-| Persistencia y permisos | `npm run verify:remote` contra el proyecto con configuración pública local | HTTP 404 `PGRST205`: falta `public.critical_reports`; no hubo inserción ni verificación de RLS. Aplicar migración SQL y repetir |
+| Persistencia y permisos | `npm.cmd run verify:remote` contra el proyecto con configuración pública local y datos ficticios | POST 201 y GET correcto; PATCH 401 y DELETE 401 anónimos; GET final conservó `Pendiente`. La denegación se debe a privilegios revocados y RLS habilitado; no demuestra una política municipal ni identidades autenticadas. Reporte de prueba `cd161a4a-4ec7-4170-99f2-6abb18badbbb` permanece para revisión administrativa |
 | GitHub Actions y PR | [Run 44665813492](https://github.com/ann0912/pfc3-examen/actions/runs/44665813492), commit `02e3b57` | Build, test y security correctos; deploy omitido en rama de trabajo; PR pendiente |
 | Vercel | Configuración local | Sin URL pública verificada |
 | ZIP | Código local | Pendiente de generar e inspeccionar |

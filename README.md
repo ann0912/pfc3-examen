@@ -14,12 +14,12 @@ npm.cmd run security
 npm.cmd run build
 ```
 
-El build queda en `dist/`. Si se configura `.env.local` con `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, el build genera una configuración pública para el cliente. La migración SQL está en `supabase/migrations`; no se ha aplicado ni verificado en un proyecto remoto. No escribas claves secretas en el repositorio.
+El build queda en `dist/`. Si se configura `.env.local` con `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, el build genera una configuración pública para el cliente. La migración SQL de `supabase/migrations` fue aplicada por el propietario del proyecto. `npm.cmd run verify:remote` comprobó inserción, lectura y rechazo anónimo de PATCH/DELETE con datos ficticios. No escribas claves secretas en el repositorio.
 
 ## Estado de integraciones
 
-La rama local de trabajo y el workflow están preparados. El backlog SCRUM se consultó en modo lectura; faltan capturas y comprobación del acceso del docente. Supabase, GitHub Actions y Vercel requieren verificación real antes de afirmar que están conectados o desplegados.
+La rama de trabajo tiene una ejecución de GitHub Actions con build, test y security correctos para un commit anterior. El backlog SCRUM se consultó en modo lectura; faltan capturas y comprobación del acceso del docente. Falta verificar el recorrido en navegador contra Supabase y el despliegue público de Vercel.
 
 ## Contexto de la base
 
-Este repositorio comenzó como una estructura vacía con un workflow de revisión de diff. Los archivos de aplicación y documentación actuales son trabajo local sin commit ni despliegue verificados.
+Este repositorio comenzó como una estructura vacía con un workflow de revisión de diff. La aplicación y los documentos tienen un primer commit publicado en la rama de trabajo; los cambios posteriores requieren revisión y publicación.
