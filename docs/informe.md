@@ -10,7 +10,7 @@ Las pruebas con dos ciudadanos y un fiscalizador acreditaron recursos propios, a
 
 Persisten dos advertencias no críticas. `has_municipal_role` debe seguir ejecutable por `authenticated` porque las políticas RLS la invocan y la función limita la consulta a `auth.uid()`. La protección contra contraseñas filtradas requiere actualizar Supabase Free a Pro y activarla en Authentication Settings; no se cambió el plan. El historial de migraciones de Supabase CLI no existe porque las migraciones se aplicaron por SQL Editor; el esquema real fue contrastado y no deben reaplicarse a ciegas.
 
-El backlog de Jira se actualizó solo con evidencia real. SCRUM-11, SCRUM-13, SCRUM-15, SCRUM-16, SCRUM-18, SCRUM-20 y SCRUM-21 quedaron Finalizadas; las otras nueve historias conservan estado pendiente y un comentario con el criterio que falta. Las cuatro épicas quedaron En curso. No se atribuye velocidad a historias cuyos criterios completos no se probaron. La evidencia histórica de versiones anteriores se conserva debajo para trazabilidad y debe leerse como cortes previos, no como estado final.
+Jira muestra actualmente las 16 historias SCRUM-9 a SCRUM-24 como Finalizadas. Este estado no se interpreta como evidencia adicional: SCRUM-9 conserva la limitación de rate limit de correos de Supabase y SCRUM-17 no cuenta con una interfaz integral de administración de funcionarios; el alta inicial y ciertos cambios de roles siguen siendo manuales en Supabase. La evidencia histórica de versiones anteriores se conserva debajo para trazabilidad y debe leerse como cortes previos, no como estado final.
 
 # Actualización de entrega — 20 de noviembre de 2026
 

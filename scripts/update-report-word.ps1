@@ -117,7 +117,7 @@ Add-Table @('Verificación','Resultado') @(
 Add-Text 'El dominio de producción respondió HTTP 200. En producción se observó una sesión real de prueba1@test.com con la mascota Robyn, el reporte LN-00000002, estado Atendido y notificaciones persistentes.'
 
 Add-Text '6 Scrum y trazabilidad' 'Heading 1'
-Add-Text 'Jira se actualizó con evidencia real. Quedaron Finalizadas SCRUM-11, SCRUM-13, SCRUM-15, SCRUM-16, SCRUM-18, SCRUM-20 y SCRUM-21. Las nueve historias restantes conservan estado pendiente y comentarios con el criterio no verificado. Las cuatro épicas SCRUM-5 a SCRUM-8 quedaron En curso. No se convirtió la simulación académica en velocidad real.'
+Add-Text 'Jira muestra SCRUM-9 a SCRUM-24 como Finalizadas. El estado administrativo no elimina dos limitaciones: SCRUM-9 quedó condicionado por el rate limit de correos de Supabase y SCRUM-17 no dispone de una interfaz integral para administrar funcionarios; el alta inicial y ciertos cambios de roles continúan realizándose manualmente en Supabase.'
 
 Add-Text '7 Limitaciones y pendientes' 'Heading 1'
 Add-Bullets @(
