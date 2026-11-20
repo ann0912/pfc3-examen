@@ -43,6 +43,8 @@ Cada barra de 15 minutos es una **ventana de planificación**, no una afirmació
 
 La proyección supone cierres hipotéticos de SCRUM-9 y SCRUM-10 en S1, SCRUM-13 en S2, SCRUM-18 en S3 y ninguno en S4; respeta la cadena de dependencias. **No se afirma que hayan ocurrido.** Los pendientes proyectados al cierre de cada bloque vuelven al backlog y no se contabilizan como velocidad. La aplicación actual no cumple todavía los criterios completos de SCRUM-13 ni SCRUM-18.
 
+**Burndown real al corte:** 0 historias aceptadas como Done, 0 SP de velocidad real y 74 SP pendientes del backlog. Esta cifra no sustituye las cuatro curvas de la simulación académica.
+
 ### Flujo Kanban
 
 Secuencia obligatoria: **To Do → In Progress → In Review → Done**. Límites WIP: **3** y **2** para las columnas intermedias. El Gantt planifica como máximo una historia por ventana, de modo que la simulación de flujo puede mantener WIP 1/3 y 1/2 sin saltos. Los estados reales de Jira permanecen separados de estas proyecciones; no se movió ninguna incidencia durante esta actualización. Definition of Done real: aceptación Dado/Cuando/Entonces, pruebas, revisión de permisos y evidencia funcional.
@@ -63,24 +65,32 @@ flowchart LR
 
 La web usa `localStorage` sin configuración y Supabase REST con URL y clave publicable. No hay backend propio ni autenticación. El propietario aplicó [la migración](../supabase/migrations/202611190001_critical_reports.sql) de `critical_reports`, con PK UUID, restricciones, índice, RLS y privilegios anónimos de lectura e inserción. `npm.cmd run verify:remote` comprobó con datos ficticios POST 201, GET del mismo ID y rechazo de PATCH/DELETE anónimos con HTTP 401; el GET final conservó `Pendiente`. El reporte de prueba `cd161a4a-4ec7-4170-99f2-6abb18badbbb` permanece en la tabla. El rechazo se explica por los privilegios revocados con RLS habilitado; no demuestra una política municipal ni permisos de usuarios autenticados. Falta comprobar el flujo desde una web pública. No existe aún modelo propietario–mascota ni FK; PostgreSQL se justifica para relaciones y consultas futuras, pero la demo actual solo tiene una entidad de reporte. No se solicitan nombres de personas ni coordenadas precisas. La aplicación carece de moderación y límites de tasa para inserción pública.
 
-La arquitectura DOCX adjunta propone Next.js, React, TypeScript, API Routes, Supabase Auth/Storage, Leaflet y OpenStreetMap. Esos componentes **no están en el código actual**. Cuenta, roles municipales, fotos y mapa son trabajo futuro. El diagrama físico previsto sería navegador → Vercel CDN y navegador → Supabase API → PostgreSQL, una vez configurados y verificados.
+La arquitectura DOCX adjunta propone Next.js, React, TypeScript, API Routes, Supabase Auth/Storage, Leaflet y OpenStreetMap. Esos componentes **no están en el código actual**. Cuenta, roles municipales, fotos y mapa son trabajo futuro. La topología física comprobada para la prueba remota es:
+
+```mermaid
+flowchart LR
+  N[Cliente de prueba Node local] -- HTTPS con clave publicable --> A[Supabase REST API]
+  A --> P[(PostgreSQL public.critical_reports)]
+  B[Navegador local] --> F[Archivos estáticos compilados]
+  F -. Despliegue aún no comprobado .-> V[Vercel]
+```
 
 | Fase | Herramienta / actividad | Control | Estado y evidencia |
 |---|---|---|---|
 | Plan | Backlog y Jira SCRUM | Criterios y dependencias | 20 incidencias comprobadas en lectura; sin cambios en Jira |
-| Code | Git, rama local de trabajo | Revisión antes de main | Rama `test/mascotas-salubridad`; cambios sin commit ni PR |
+| Code | Git, rama de trabajo | Revisión antes de main | PR [#1](https://github.com/ann0912/pfc3-examen/pull/1) en borrador, sin conflictos al consultar; no fusionado |
 | Build | Node, `npm ci`, build estático | Lockfile y sintaxis | Correcto localmente y en [Actions 44665813492](https://github.com/ann0912/pfc3-examen/actions/runs/44665813492) |
 | Test | `node --test` | Validación, escape de texto y persistencia local | 5 pruebas locales y job remoto correctos; no cubren criterios completos de SCRUM-13 |
-| Release | PR de GitHub | Revisión y checks | Propuesta; sin PR ni branch protection verificados |
+| Release | PR de GitHub | Revisión y checks | PR [#1](https://github.com/ann0912/pfc3-examen/pull/1) sin conflictos; checks aprobados para `91ba5d0`; `main` sin protección de rama comprobada |
 | Deploy | Workflow y Vercel | Job dependiente de seguridad | Omitido correctamente en el push de la rama de trabajo; no hay deploy comprobado |
 | Operate | Supabase REST y PostgreSQL | RLS habilitado y privilegios mínimos anónimos | Migración aplicada; POST/GET correctos, PATCH/DELETE HTTP 401; sin prueba de identidad municipal |
 | Monitor | Logs de Actions/Vercel/Supabase | Diagnóstico de fallos | Propuesta futura |
 
-**Seguridad implementada en el repositorio:** validación de distrito, categoría y longitud; escape de texto antes de insertarlo en HTML; migración con RLS y privilegios anónimos mínimos; workflow con pasos de patrones, audit, Gitleaks y CodeQL. **Verificado:** 5/5 pruebas locales, lint, build y audit locales; en [Actions 44665813492](https://github.com/ann0912/pfc3-examen/actions/runs/44665813492) pasaron build, test y security, incluidos Gitleaks y CodeQL; la API real rechazó PATCH y DELETE anónimos. **Pendiente:** pruebas del navegador, política municipal, bloquear merge con checks y asegurar que Vercel no publique producción por otra vía.
+**Seguridad implementada en el repositorio:** validación de distrito, categoría y longitud; escape de texto antes de insertarlo en HTML; migración con RLS y privilegios anónimos mínimos; workflow con pasos de patrones, audit, Gitleaks y CodeQL. **Verificado:** 5/5 pruebas locales, lint, build y audit locales; en [Actions 44669124034](https://github.com/ann0912/pfc3-examen/actions/runs/44669124034) pasaron build, test y security, incluidos Gitleaks y CodeQL; la API real rechazó PATCH y DELETE anónimos. **Pendiente:** pruebas del navegador, política municipal, proteger `main` con checks y comprobar en Vercel que la integración Git no publique producción por otra vía. `vercel.json` desactiva despliegues automáticos por Git; esa configuración requiere verificación en el proyecto real.
 
 ## 4. GitHub, pipeline y web
 
-Repositorio: [ann0912/pfc3-examen](https://github.com/ann0912/pfc3-examen). El commit [`02e3b57`](https://github.com/ann0912/pfc3-examen/commit/02e3b57) está publicado en `test/mascotas-salubridad`; no hay PR verificado. El workflow conserva `git diff --check` y ordena los jobs **build → test → security → deploy**. La [ejecución 44665813492](https://github.com/ann0912/pfc3-examen/actions/runs/44665813492) pasó build, test y security; deploy se omitió porque fue un push a la rama de trabajo. El build local ya genera configuración pública de Supabase, y la prueba directa de su API pasó. No hay URL pública Vercel ni prueba del recorrido desde esa URL; tampoco se ha comprobado la configuración de producción de Vercel.
+Repositorio: [ann0912/pfc3-examen](https://github.com/ann0912/pfc3-examen). El commit [`91ba5d0`](https://github.com/ann0912/pfc3-examen/commit/91ba5d0) está publicado en `test/mascotas-salubridad`; el PR [#1](https://github.com/ann0912/pfc3-examen/pull/1) sigue en borrador. El workflow conserva `git diff --check` y ordena los jobs **build → test → security → deploy**. La [ejecución 44669124034](https://github.com/ann0912/pfc3-examen/actions/runs/44669124034) pasó build, test y security; deploy se omitió porque fue un push a la rama de trabajo. El build local genera configuración pública de Supabase, y la prueba directa de su API pasó. No hay URL pública Vercel ni prueba del recorrido desde esa URL; tampoco se ha comprobado la configuración de producción de Vercel.
 
 | Recorrido | Estado comprobable |
 |---|---|
@@ -92,9 +102,9 @@ Repositorio: [ann0912/pfc3-examen](https://github.com/ann0912/pfc3-examen). El c
 | Fiscalización y cierre municipal | No implementados |
 | Supabase | API real: POST/GET correctos; PATCH/DELETE anónimos HTTP 401; falta prueba desde la web pública |
 | Vercel | Sin URL pública verificada |
-| GitHub Actions | Build, test y security correctos en run 44665813492; deploy omitido |
+| GitHub Actions | Build, test y security correctos en [run 44669124034](https://github.com/ann0912/pfc3-examen/actions/runs/44669124034); deploy omitido |
 
-Para la entrega faltan capturas reales del proyecto SCRUM y de Actions, comprobar acceso del docente, PR, despliegue y ZIP. El enlace a Actions sí demuestra los jobs remotos; no se adjudica evidencia de ejecución a la simulación académica.
+Para la entrega faltan capturas reales del proyecto SCRUM y de Actions, comprobar acceso del docente, despliegue y prueba web pública. El PR existe y el ZIP se genera desde el commit publicado, sin archivos ignorados. El enlace a Actions sí demuestra los jobs remotos; no se adjudica evidencia de ejecución a la simulación académica.
 
 ## Guion breve y preguntas de práctica
 

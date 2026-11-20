@@ -118,6 +118,6 @@ Los cuatro sprints de Jira están en estado futuro y sus objetivos indican H0–
 | Backlog SCRUM | Consulta JQL de SCRUM-5 a SCRUM-24 | Leído; acceso del docente y capturas pendientes |
 | Aplicación | 5 pruebas Node y build local | Parcial: falta prueba visual y criterios completos |
 | Persistencia y permisos | `npm.cmd run verify:remote` contra el proyecto con configuración pública local y datos ficticios | POST 201 y GET correcto; PATCH 401 y DELETE 401 anónimos; GET final conservó `Pendiente`. La denegación se debe a privilegios revocados y RLS habilitado; no demuestra una política municipal ni identidades autenticadas. Reporte de prueba `cd161a4a-4ec7-4170-99f2-6abb18badbbb` permanece para revisión administrativa |
-| GitHub Actions y PR | [Run 44665813492](https://github.com/ann0912/pfc3-examen/actions/runs/44665813492), commit `02e3b57` | Build, test y security correctos; deploy omitido en rama de trabajo; PR pendiente |
-| Vercel | Configuración local | Sin URL pública verificada |
-| ZIP | Código local | Pendiente de generar e inspeccionar |
+| GitHub Actions y PR | [Run 44669124034](https://github.com/ann0912/pfc3-examen/actions/runs/44669124034), commit `91ba5d0`, PR [#1](https://github.com/ann0912/pfc3-examen/pull/1) | Build, test y security correctos; deploy omitido en rama de trabajo; PR en borrador y sin conflictos al consultar |
+| Vercel | `vercel.json` con despliegue automático Git desactivado; CLI previsto en Actions | Sin URL pública ni configuración de proyecto verificada; no pulsar Deploy inicial antes de controles aprobados |
+| ZIP | `output/pfc3-examen-PC2.zip` generado con `git archive` | 38 entradas inspeccionadas; incluye código, documentos y workflow; excluye `.env.local`, dependencias y `dist`. Regenerar tras el último commit |
