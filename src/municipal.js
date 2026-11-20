@@ -107,11 +107,11 @@ export function initializeMunicipal(client) {
     catch (error) { notice('#assignment-feedback', error.message); }
   });
   $('#inspection-form').addEventListener('submit', async event => {
-    event.preventDefault(); const data = Object.fromEntries(new FormData(event.currentTarget));
+    event.preventDefault(); const form = event.currentTarget; const data = Object.fromEntries(new FormData(form));
     if (!data.report_id || data.observations.trim().length < 15 || data.actions.trim().length < 5) {
       notice('#inspection-feedback', 'Completa el reporte, las observaciones y las acciones.'); return;
     }
-    try { await client.createInspection(data.report_id, data.observations.trim(), data.actions.trim()); notice('#inspection-feedback', 'Inspección guardada.', true); event.currentTarget.reset(); }
+    try { await client.createInspection(data.report_id, data.observations.trim(), data.actions.trim()); notice('#inspection-feedback', 'Inspección guardada.', true); form.reset(); }
     catch (error) { notice('#inspection-feedback', error.message); }
   });
   $('#role-form').addEventListener('submit', async event => {

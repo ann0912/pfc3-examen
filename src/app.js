@@ -91,12 +91,13 @@ async function showSession() {
 }
 $('#signup-form').addEventListener('submit', async event => {
   event.preventDefault();
-  const result = validateCitizen(Object.fromEntries(new FormData(event.currentTarget)));
+  const form = event.currentTarget;
+  const result = validateCitizen(Object.fromEntries(new FormData(form)));
   if (!result.valid) { notice('#signup-feedback', Object.values(result.errors)[0]); return; }
-  const button = event.currentTarget.querySelector('button[type=submit]'); button.disabled = true;
+  const button = form.querySelector('button[type=submit]'); button.disabled = true;
   try {
     const response = await client.signUp(result.value);
-    event.currentTarget.reset();
+    form.reset();
     notice('#signup-feedback', response.access_token ? 'Cuenta creada y sesión iniciada.' : 'Revisa tu correo para confirmar la cuenta antes de ingresar.', true);
     await showSession();
   } catch (error) { notice('#signup-feedback', error.message); }
@@ -104,23 +105,25 @@ $('#signup-form').addEventListener('submit', async event => {
 });
 $('#login-form').addEventListener('submit', async event => {
   event.preventDefault();
-  const data = Object.fromEntries(new FormData(event.currentTarget));
-  const button = event.currentTarget.querySelector('button[type=submit]'); button.disabled = true;
-  try { await client.signIn(String(data.email || '').trim(), String(data.password || '')); event.currentTarget.reset(); await showSession(); }
+  const form = event.currentTarget;
+  const data = Object.fromEntries(new FormData(form));
+  const button = form.querySelector('button[type=submit]'); button.disabled = true;
+  try { await client.signIn(String(data.email || '').trim(), String(data.password || '')); form.reset(); await showSession(); }
   catch (error) { notice('#login-feedback', error.message); }
   finally { button.disabled = false; }
 });
 $('#logout').addEventListener('click', async () => { await client.signOut(); reports = []; pets = []; await showSession(); });
 $('#pet-form').addEventListener('submit', async event => {
   event.preventDefault();
-  const data = Object.fromEntries(new FormData(event.currentTarget));
+  const form = event.currentTarget;
+  const data = Object.fromEntries(new FormData(form));
   const result = validatePet(data);
   if (!result.valid) { notice('#pet-feedback', Object.values(result.errors)[0]); return; }
   const button = $('#pet-submit'); button.disabled = true;
   try {
     if (data.id) await client.updatePet(data.id, result.value); else await client.createPet(result.value);
     notice('#pet-feedback', data.id ? 'Mascota actualizada.' : 'Mascota registrada.', true);
-    event.currentTarget.reset(); event.currentTarget.elements.id.value = '';
+    form.reset(); form.elements.id.value = '';
     $('#pet-cancel').hidden = true; button.textContent = 'Guardar mascota'; await refresh();
   } catch (error) { notice('#pet-feedback', error.message); }
   finally { button.disabled = false; }

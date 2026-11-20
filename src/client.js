@@ -120,7 +120,8 @@ export function createClient(config, fetcher = globalThis.fetch, storage = globa
     },
     async createReport(value) {
       const rows = await table('critical_reports', '?select=id,code,status,created_at,district,category,reference,description', {
-        method: 'POST', body: value, headers: { Prefer: 'return=representation' }
+        // Evita evaluar el DEFAULT de code con la identidad cliente; el trigger seguro genera el código.
+        method: 'POST', body: { ...value, code: null }, headers: { Prefer: 'return=representation' }
       });
       return rows[0];
     },

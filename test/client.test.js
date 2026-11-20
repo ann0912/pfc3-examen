@@ -32,6 +32,7 @@ test('envía identidad de Supabase en inserción y lectura propias', async () =>
   await client.myReports();
   assert.equal(created.code, 'LN-00000001');
   assert.equal(calls[1].options.headers.Authorization, 'Bearer access-test');
+  assert.equal(JSON.parse(calls[1].options.body).code, null);
   assert.equal(calls[2].options.headers.Authorization, 'Bearer access-test');
   assert.match(calls[2].url, /critical_reports/);
 });
