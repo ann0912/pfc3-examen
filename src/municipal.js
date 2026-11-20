@@ -50,11 +50,16 @@ export function initializeMunicipal(client) {
   }
   function renderSelectors() {
     const reportOptions = reports.map(item => option(item.id, `${item.code || 'Histórico'} · ${item.district}`)).join('');
+    const myAssignments = assignments.filter(item => item.fiscalizador_id === client.user?.id);
     $('#assignment-report').innerHTML = `<option value="">Selecciona</option>${reportOptions}`;
-    $('#inspection-report').innerHTML = `<option value="">Selecciona</option>${assignments.filter(a => a.fiscalizador_id === client.user?.id).map(a => {
+    $('#inspection-report').innerHTML = myAssignments.length
+      ? `<option value="">Selecciona</option>${myAssignments.map(a => {
       const report = reports.find(r => r.id === a.report_id);
       return report ? option(report.id, `${report.code || 'Histórico'} · ${report.district}`) : '';
-    }).join('')}`;
+      }).join('')}`
+      : '<option value="" disabled selected>No tienes reportes asignados</option>';
+    if (role === 'fiscalizador' && !myAssignments.length)
+      notice('#inspection-feedback', 'Aún no tienes reportes asignados. Un supervisor o administrador debe asignarte uno.');
     $('#assignment-person').innerHTML = `<option value="">Selecciona</option>${roles.filter(item => item.role === 'fiscalizador').map(item => {
       const user = users.find(candidate => candidate.id === item.user_id);
       return user ? option(user.id, `${user.full_name} · ${user.email}`) : '';
