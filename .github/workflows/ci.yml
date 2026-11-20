@@ -116,6 +116,13 @@ jobs:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
         run: |
-          npx --yes vercel@48 pull --yes --environment=production --token="$VERCEL_TOKEN"
-          npx --yes vercel@48 build --prod --token="$VERCEL_TOKEN"
-          npx --yes vercel@48 deploy --prebuilt --prod --token="$VERCEL_TOKEN"
+          test "$VERCEL_ORG_ID" = "team_BKbdRAQ9A2iT1mHKNeW5ljPT"
+          test "$VERCEL_PROJECT_ID" = "prj_Q72SwPVfWLdsn15Hc2siO6PzekIG"
+          access=$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' \
+            --header "Authorization: Bearer $VERCEL_TOKEN" \
+            "https://api.vercel.com/v9/projects/$VERCEL_PROJECT_ID?teamId=$VERCEL_ORG_ID")
+          echo "Vercel project access HTTP $access"
+          test "$access" = "200"
+          npx --yes vercel@48 pull --yes --environment=production --scope=usil2 --token="$VERCEL_TOKEN"
+          npx --yes vercel@48 build --prod --scope=usil2 --token="$VERCEL_TOKEN"
+          npx --yes vercel@48 deploy --prebuilt --prod --scope=usil2 --token="$VERCEL_TOKEN"
