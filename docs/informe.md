@@ -1,3 +1,13 @@
+# Actualización de entrega — 20 de noviembre de 2026
+
+Esta actualización conserva el trabajo local de `feat/pc2-complete-system`. El código añade interfaz de cuenta y mascotas, mapa, fotografías, filtros, indicadores y operaciones municipales. Las migraciones `202611200001` y `202611200002` modelan Auth, roles, RLS, asignaciones, inspecciones, historial y almacenamiento privado. **Estas funciones nuevas todavía no se acreditan como operativas en producción:** las migraciones y el despliegue de esta rama siguen pendientes de verificación remota.
+
+En este corte se ejecutaron `npm.cmd test` (**11/11 aprobadas**), `npm.cmd run build` (**aprobado**), `npm.cmd run lint` (**aprobado**), `npm.cmd run typecheck` (**aprobado; comprobación sintáctica, no TypeScript**) y `npm.cmd run security` (**sin hallazgos**). Las 11 pruebas son locales y no sustituyen pruebas de autenticación, RLS, carga de fotos o recorrido completo en Supabase. La evidencia de Chrome y Vercel de la sección siguiente corresponde a la versión anterior publicada.
+
+Se revisaron las migraciones nuevas antes de aplicarlas: dependen de `202611190001`, cambian el acceso anónimo a reportes, crean perfiles ligados a `auth.users`, rol municipal y políticas por propietario o función. Se requiere una sesión administrativa de Supabase, aplicar en orden y comprobar con identidades de ciudadano, fiscalizador, supervisor y administrador. **No se han aplicado ni probado contra la base remota en este corte.** No se declara historia adicional en Done ni velocidad real positiva.
+
+El archivo `output/pfc3-examen-PC2.zip` se genera desde una lista explícita de código, migraciones, pruebas y documentación, excluyendo `.env.local`, `.tmp`, `node_modules`, `dist` y credenciales. Su apertura y contenido se verifican por lectura de entradas ZIP. Para la sustentación, distinguir la versión pública anterior de la ampliación local y mostrar primero el recorrido de reporte que sí fue comprobado.
+
 # Corte de ejecución real — 19 de noviembre de 2026
 
 La entrega pública verificada es [Lima Norte Saludable](https://pfc3-examen.vercel.app/). El despliegue [Vercel BopyiFAHN1Sao49pPWwK4CFKBoxP](https://vercel.com/usil2/pfc3-examen/BopyiFAHN1Sao49pPWwK4CFKBoxP) quedó **Ready**. Se usó la sesión local autenticada y el build de producción del mismo árbol de código de `main`; no se usó un deploy automático exitoso.
