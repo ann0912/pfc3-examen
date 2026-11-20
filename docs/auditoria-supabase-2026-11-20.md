@@ -13,6 +13,7 @@ Proyecto inspeccionado: `pqgfhgpeilncwyoyymgq`. Consultas de solo lectura en SQL
 - Tres perfiles de prueba fueron confirmados: `prueba1@test.com` y `prueba2@test.com` sin rol municipal; `prueba3@test.com` con rol `fiscalizador`. La asignación se hizo en el SQL Editor a la tercera cuenta únicamente y se verificó con una consulta posterior. Crear perfiles y asignar el rol no equivale a haber probado sus sesiones ni políticas RLS.
 - Al abrir el formulario de inspección con `prueba3@test.com`, el selector no mostró reportes porque no había filas de `report_assignments` asociadas al fiscalizador. Es el comportamiento esperado de RLS y del flujo: un rol municipal no crea asignaciones automáticamente. La interfaz se corrigió para mostrar el estado vacío y explicar que un supervisor o administrador debe asignar un reporte.
 - Se creó una asignación controlada del reporte ciudadano más reciente a `prueba3@test.com`. El usuario confirmó en la aplicación local que el reporte asignado apareció, pudo registrar la inspección y, tras recargar, se mostraron tanto el historial como las inspecciones. Esta evidencia confirma persistencia del flujo fiscalizador para esa identidad; fue ejecutada y reportada por el usuario. No sustituye la prueba cruzada de aislamiento entre los ciudadanos A y B ni acredita el flujo de asignación desde una sesión real de supervisor.
+- El usuario inició sesión con `prueba2@test.com` y confirmó que no veía la mascota ni el reporte de `prueba1@test.com`. Luego creó una mascota y un reporte propios con la cuenta 2, recargó y confirmó su persistencia. Finalmente volvió a `prueba1@test.com` y confirmó que no veía los recursos de la cuenta 2. Esta prueba de interfaz acredita lectura propia y aislamiento bilateral A/B para mascotas y reportes; fue ejecutada y reportada por el usuario.
 
 ## Calidad local posterior
 
@@ -20,7 +21,7 @@ Proyecto inspeccionado: `pqgfhgpeilncwyoyymgq`. Consultas de solo lectura en SQL
 
 ## Pendientes críticos
 
-1. Probar con dos ciudadanos y un usuario municipal de prueba, con sesiones reales, acceso cruzado, operaciones autorizadas, almacenamiento y persistencia. La prueba de una sola sesión ciudadana no acredita separación entre usuarios.
+1. Completar intentos explícitos de modificación ajena y las pruebas de fotografías privadas. La lectura propia, el aislamiento bilateral A/B, la persistencia y el registro de inspección fiscalizadora ya fueron confirmados por el usuario.
 2. Probar las tres sesiones y resolver o justificar los avisos restantes del asesor. Habilitar la protección de contraseñas filtradas requiere cambiar del plan Free a Pro o superior y activarla en Authentication > Settings; no se hizo ningún cambio de plan.
 3. Resolver la salida pública de `public_report_locations`, especialmente el campo `reference`, sin romper el mapa anónimo.
 4. No hacer merge ni despliegue hasta completar los controles anteriores.
