@@ -6,9 +6,10 @@ Aplicación web PC2 para registro ciudadano de mascotas e incidencias de salubri
 
 - Web: https://pfc3-examen.vercel.app/
 - Repositorio: https://github.com/ann0912/pfc3-examen
-- PR del incremento PC2: https://github.com/ann0912/pfc3-examen/pull/5
-- Merge de PC2 en `main`: `804424e97ff79321d7a133cb983649afcc82d39f`
-- CI/CD: https://github.com/ann0912/pfc3-examen/actions/runs/44695736671
+- PR funcional PC2: https://github.com/ann0912/pfc3-examen/pull/5
+- PR de cierre documental: https://github.com/ann0912/pfc3-examen/pull/8
+- Commit auditado antes del cierre documental: `8a6359851b5eefc4ab6f5aee9ac994fb3eac6107`
+- CI/CD auditado: https://github.com/ann0912/pfc3-examen/actions/runs/44704978497
 
 El run de `main` aprobó build, 12 pruebas, análisis de seguridad, Gitleaks, `npm audit`, CodeQL y despliegue de Vercel. La aplicación usa Supabase Auth, PostgreSQL con RLS y Storage privado. El frontend solo recibe la URL y la clave publicable; no usa `service_role` ni credenciales administrativas.
 
