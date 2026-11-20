@@ -97,7 +97,7 @@ Fuente: `(10-26-2) PrácticaCalificada2-PFCIII-H.pdf`, páginas 1–3. El PDF im
 
 ## Flujo funcional mínimo del examen de cuatro horas
 
-Prioridad: registrar una incidencia ficticia, comprobar que se guarda y se consulta tras recargar, y verificar permisos. Después: pipeline, despliegue, capturas, accesos y ZIP. La web actual funciona solo con `localStorage`; Supabase requiere migración aplicada y prueba real. Las cuentas, mascotas, mapa, fotos y fiscalización permanecen pendientes. Ninguna historia de SCRUM se declara completamente aceptada por una pantalla parcial.
+Prioridad: registrar una incidencia ficticia, comprobar que se guarda y se consulta tras recargar, y verificar permisos. Después: pipeline, despliegue, capturas, accesos y ZIP. El incremento PC2 usa Supabase para cuentas, mascotas y reportes; una sesión ciudadana comprobó la persistencia de mascota y reporte tras recargar. Falta probar autorización con tres identidades independientes, fotografías y fiscalización. Ninguna historia de SCRUM se declara completamente aceptada por una pantalla parcial.
 
 | Bloque de 60 min | Prioridad de examen | Historia relacionada y alcance real |
 |---|---|---|
